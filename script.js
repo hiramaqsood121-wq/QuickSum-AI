@@ -1,3 +1,4 @@
+// Aapki Groq API Key
 const API_KEY = "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";
 
 const sumBtn = document.getElementById('sumBtn');
@@ -13,7 +14,7 @@ sumBtn.addEventListener('click', async () => {
         return;
     }
 
-    sumBtn.innerText = "Processing accurately...";
+    sumBtn.innerText = "Processing with 2026 Data...";
     sumBtn.disabled = true;
 
     try {
@@ -28,19 +29,21 @@ sumBtn.addEventListener('click', async () => {
                 messages: [
                     {
                         role: "system",
-                        content: `You are an expert executive assistant. Your task is to summarize the provided text with 100% accuracy. 
-                        Follow these strict rules:
-                        1. Provide exactly 3 distinct bullet points.
-                        2. Each point must cover a different key aspect of the text without overlapping or mixing information.
-                        3. Be precise and do not omit critical details from the original content.
-                        4. Do not add any introductory or concluding remarks, just the bullet points.`
+                        content: `Today's date is Thursday, March 26, 2026. 
+                        You are a highly accurate AI Assistant. 
+                        Rules:
+                        1. If the user asks a question, provide a direct and factual answer based on the year 2026.
+                        2. As of March 2026, the President of Pakistan is Asif Ali Zardari.
+                        3. If the user provides a long text, summarize it into 3 clear and distinct bullet points.
+                        4. Do not mix information between points.
+                        5. Do not say 'I don't have real-time info' because you are being updated with this prompt.`
                     },
                     {
                         role: "user",
-                        content: `Summarize this text accurately: ${textToProcess}`
+                        content: textToProcess
                     }
                 ],
-                temperature: 0.2 // Is se AI zyada "Focused" aur "Factual" rehta hai
+                temperature: 0.1 // Is se AI bilkul seedha aur sachha jawab deta hai, bhatakta nahi.
             })
         });
 
@@ -48,14 +51,14 @@ sumBtn.addEventListener('click', async () => {
         
         if (data.error) throw new Error(data.error.message);
 
-        const summary = data.choices[0].message.content;
+        const aiResponse = data.choices[0].message.content;
 
-        outputText.innerText = summary;
+        outputText.innerText = aiResponse;
         resultContainer.classList.remove('hidden');
 
     } catch (error) {
         console.error("Error:", error);
-        alert("Something went wrong. Please try again.");
+        alert("Connection error! Please check your internet or API key.");
     } finally {
         sumBtn.innerText = "Summarize Text";
         sumBtn.disabled = false;
