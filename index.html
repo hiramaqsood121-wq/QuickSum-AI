@@ -3,20 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuickSum AI - Simple Summarizer</title>
+    <title>Personal AI Assistant | 2026</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <div class="container">
-        <h1>⚡ QuickSum AI</h1>
-        <p>Paste your long text below to get a 3-bullet summary.</p>
+        <h1>The Assistant</h1>
         
-        <textarea id="inputText" placeholder="Paste your article or notes here..."></textarea>
+        <p class="welcome-msg">Initializing your personal space...</p>
         
-        <button id="sumBtn">Summarize Text</button>
+        <div class="input-section">
+            <textarea id="inputText" placeholder="How can I help you today? Ask me anything about 2026..."></textarea>
+            
+            <button id="sumBtn">Ask Assistant</button>
+        </div>
 
         <div id="resultContainer" class="hidden">
-            <h3>Summary:</h3>
             <div id="outputText"></div>
         </div>
     </div>
