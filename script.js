@@ -1,4 +1,3 @@
-// Aapki Groq API Key yahan add kar di gayi hai
 const API_KEY = "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";
 
 const sumBtn = document.getElementById('sumBtn');
@@ -14,12 +13,10 @@ sumBtn.addEventListener('click', async () => {
         return;
     }
 
-    // Button ko "Processing" mode mein dalna
-    sumBtn.innerText = "Summarizing...";
+    sumBtn.innerText = "Processing accurately...";
     sumBtn.disabled = true;
 
     try {
-        // Groq API ko call karne ka tareeqa
         const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
             method: "POST",
             headers: {
@@ -27,39 +24,39 @@ sumBtn.addEventListener('click', async () => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                model: "llama-3.3-70b-versatile", // Yeh Groq ka fast model hai
+                model: "llama-3.3-70b-versatile",
                 messages: [
                     {
                         role: "system",
-                        content: "You are a helpful assistant that summarizes text into 3 clear bullet points."
+                        content: `You are an expert executive assistant. Your task is to summarize the provided text with 100% accuracy. 
+                        Follow these strict rules:
+                        1. Provide exactly 3 distinct bullet points.
+                        2. Each point must cover a different key aspect of the text without overlapping or mixing information.
+                        3. Be precise and do not omit critical details from the original content.
+                        4. Do not add any introductory or concluding remarks, just the bullet points.`
                     },
                     {
                         role: "user",
-                        content: `Please summarize this: ${textToProcess}`
+                        content: `Summarize this text accurately: ${textToProcess}`
                     }
-                ]
+                ],
+                temperature: 0.2 // Is se AI zyada "Focused" aur "Factual" rehta hai
             })
         });
 
         const data = await response.json();
         
-        // Agar koi error aaye to console mein dikhaye
-        if (data.error) {
-            throw new Error(data.error.message);
-        }
+        if (data.error) throw new Error(data.error.message);
 
-        // Summary extract karna
         const summary = data.choices[0].message.content;
 
-        // Screen par summary dikhana
         outputText.innerText = summary;
         resultContainer.classList.remove('hidden');
 
     } catch (error) {
         console.error("Error:", error);
-        alert("Oops! Something went wrong: " + error.message);
+        alert("Something went wrong. Please try again.");
     } finally {
-        // Button ko wapis normal karna
         sumBtn.innerText = "Summarize Text";
         sumBtn.disabled = false;
     }
