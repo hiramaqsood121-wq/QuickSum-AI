@@ -1,20 +1,25 @@
-// Aapki Groq API Key
 const API_KEY = "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";
 
 const sumBtn = document.getElementById('sumBtn');
 const inputText = document.getElementById('inputText');
 const resultContainer = document.getElementById('resultContainer');
 const outputText = document.getElementById('outputText');
+const welcomeText = document.querySelector('.welcome-msg');
+
+let userName = "";
+
+// Tool load hotay hi naam poochen
+window.onload = () => {
+    userName = prompt("Welcome to your Personal AI. May I have your name?", "Guest");
+    if (!userName) userName = "Guest";
+    welcomeText.innerText = `Good evening, ${userName}. How can I assist you today?`;
+};
 
 sumBtn.addEventListener('click', async () => {
-    const textToProcess = inputText.value;
+    const query = inputText.value;
+    if (!query) return;
 
-    if (!textToProcess) {
-        alert("Please paste some text first!");
-        return;
-    }
-
-    sumBtn.innerText = "Processing with 2026 Data...";
+    sumBtn.innerText = "CONSULTING AI...";
     sumBtn.disabled = true;
 
     try {
@@ -29,38 +34,30 @@ sumBtn.addEventListener('click', async () => {
                 messages: [
                     {
                         role: "system",
-                        content: `Today's date is Thursday, March 26, 2026. 
-                        You are a highly accurate AI Assistant. 
-                        Rules:
-                        1. If the user asks a question, provide a direct and factual answer based on the year 2026.
-                        2. As of March 2026, the President of Pakistan is Asif Ali Zardari.
-                        3. If the user provides a long text, summarize it into 3 clear and distinct bullet points.
-                        4. Do not mix information between points.
-                        5. Do not say 'I don't have real-time info' because you are being updated with this prompt.`
+                        content: `Today is Thursday, March 26, 2026. 
+                        You are a sophisticated, polite personal assistant for ${userName}.
+                        Style: Professional, concise, and elegant.
+                        Knowledge: 
+                        - Current President of Pakistan in 2026 is Asif Ali Zardari.
+                        - Always provide direct answers for 2026 queries.
+                        - Address the user as ${userName} if appropriate.`
                     },
-                    {
-                        role: "user",
-                        content: textToProcess
-                    }
+                    { role: "user", content: query }
                 ],
-                temperature: 0.1 // Is se AI bilkul seedha aur sachha jawab deta hai, bhatakta nahi.
+                temperature: 0.2
             })
         });
 
         const data = await response.json();
-        
-        if (data.error) throw new Error(data.error.message);
-
         const aiResponse = data.choices[0].message.content;
 
         outputText.innerText = aiResponse;
         resultContainer.classList.remove('hidden');
 
     } catch (error) {
-        console.error("Error:", error);
-        alert("Connection error! Please check your internet or API key.");
+        alert("An error occurred. Please try again.");
     } finally {
-        sumBtn.innerText = "Summarize Text";
+        sumBtn.innerText = "ASK ASSISTANT";
         sumBtn.disabled = false;
     }
 });
