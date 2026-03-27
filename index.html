@@ -2,20 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Mini AI Tool</title>
+  <title>AI Assistant</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <div class="chat-container">
-    <h2>Mini AI Tool</h2>
+<div class="app">
+  <h2>AI Assistant 🤖</h2>
 
-    <div id="chat-box"></div>
+  <div class="chat" id="chat"></div>
 
-    <input type="text" id="user-input" placeholder="Type your question..." />
-    <button onclick="sendMessage()">Send</button>
+  <div class="input-area">
+    <input id="input" placeholder="Ask anything..." />
+    <button onclick="askAI()">Ask AI</button>
   </div>
+</div>
 
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
