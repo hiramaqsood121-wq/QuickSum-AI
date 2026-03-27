@@ -1,29 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal AI Assistant | 2026</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Mini AI Tool</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="container">
-        <h1>The Assistant</h1>
-        
-        <p class="welcome-msg">Initializing your personal space...</p>
-        
-        <div class="input-section">
-            <textarea id="inputText" placeholder="How can I help you today? Ask me anything about 2026..."></textarea>
-            
-            <button id="sumBtn">Ask Assistant</button>
-        </div>
+  <div class="chat-container">
+    <h2>Mini AI Tool</h2>
 
-        <div id="resultContainer" class="hidden">
-            <div id="outputText"></div>
-        </div>
-    </div>
+    <div id="chat-box"></div>
 
-    <script src="script.js"></script>
+    <input type="text" id="user-input" placeholder="Type your question..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
