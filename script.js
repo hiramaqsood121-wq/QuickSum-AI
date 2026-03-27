@@ -1,46 +1,34 @@
-async function sendMessage() {
-  const input = document.getElementById("user-input");
-  const chatBox = document.getElementById("chat-box");
+async function askAI() {
+  const input = document.getElementById("input");
+  const chat = document.getElementById("chat");
 
-  const userText = input.value.trim();
+  const question = input.value.trim();
+  if (!question) return;
 
-  if (userText === "") return;
-
-  // Show user message
-  chatBox.innerHTML += `<p><b>You:</b> ${userText}</p>`;
-
+  chat.innerHTML += `<div class="msg user"><b>You:</b> ${question}</div>`;
   input.value = "";
 
   try {
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    // URL ko "/api/chat" rakhein (Vercel automatic api folder dhoond lega)
+    const res = await fetch("/api/chat", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer YOUR_API_KEY"
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify({
-        model: "gpt-4o-mini",
-        messages: [
-          {
-            role: "system",
-            content: "You are a helpful AI assistant. Always give correct, short and clear answers. If you don't know, say I don't know."
-          },
-          {
-            role: "user",
-            content: userText
-          }
-        ],
-        temperature: 0.3
-      })
+      body: JSON.stringify({ message: question })
     });
 
-    const data = await response.json();
+    const data = await res.json();
 
-    const botReply = data.choices[0].message.content;
+    if (data.reply) {
+        chat.innerHTML += `<div class="msg ai"><b>AI:</b> ${data.reply}</div>`;
+    } else {
+        chat.innerHTML += `<div style="color:red;">Error: No reply from AI</div>`;
+    }
+    
+    chat.scrollTop = chat.scrollHeight;
 
-    chatBox.innerHTML += `<p><b>AI:</b> ${botReply}</p>`;
   } catch (error) {
-    chatBox.innerHTML += `<p><b>AI:</b> Error aa gaya, dubara try karo.</p>`;
-    console.error(error);
+    chat.innerHTML += `<div style="color:red;">Error fetching response</div>`;
   }
 }
